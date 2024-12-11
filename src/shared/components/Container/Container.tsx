@@ -13,7 +13,7 @@ export function Container({ style, color, variant = 'safe', ...otherProps }: Con
   const styles = makeStyles(pallet);
 
   const components = {
-    safe: <SafeAreaView {...otherProps} style={[{ backgroundColor: pallet.colors.background }, style]} />,
+    safe: <SafeAreaView {...otherProps} style={[{ backgroundColor: pallet.colors.gray[100] }, style]} />,
     main: <ScrollView scrollToOverflowEnabled contentContainerStyle={[styles.main, style]} {...otherProps} />,
   };
 
@@ -24,7 +24,7 @@ const makeStyles = ({ colors }: typeof Colors) =>
   StyleSheet.create({
     main: {
       flexGrow: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.gray[100],
       paddingBottom: 60,
     },
   });
