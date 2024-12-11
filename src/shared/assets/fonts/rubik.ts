@@ -1,8 +1,10 @@
+import { Rubik_400Regular, Rubik_500Medium, Rubik_600SemiBold, Rubik_700Bold } from '@expo-google-fonts/rubik';
+
 export const Fonts = {
-  bold: 'Rubik_700Bold',
-  medium: 'Rubik_500Medium',
-  regular: 'Rubik_400Regular',
-  semiBold: 'Rubik_600SemiBold',
+  Rubik_700Bold,
+  Rubik_500Medium,
+  Rubik_400Regular,
+  Rubik_600SemiBold,
 };
 
 export type FontsType = {
