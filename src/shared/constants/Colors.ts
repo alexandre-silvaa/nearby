@@ -26,3 +26,9 @@ export type ColorsType = {
     base: string;
   };
 };
+
+export type ColorKeys =
+  | {
+      [K in keyof ColorsType]: `${K}.${keyof ColorsType[K] & (string | number)}`;
+    }[keyof ColorsType]
+  | keyof ColorsType;

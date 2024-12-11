@@ -1,19 +1,14 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
-import { useThemeColor } from '@/src/shared/hooks/useThemeColor';
-import { ColorsType } from '../../constants/Colors';
-import { FontsType } from '../../assets/fonts/rubik';
+import { ColorKeys } from '../../constants/Colors';
 
 export type TypographyProps = TextProps & {
-  color?: keyof ColorsType;
+  color?: ColorKeys;
   size?: number;
   maxFontSizeMultiplier?: number;
   weight?: 'regular' | 'medium' | 'semibold' | 'bold';
 };
 
 export function Typography({ style, weight = 'regular', color, size = 14, maxFontSizeMultiplier = 1.2, ...rest }: TypographyProps) {
-  const { fonts } = useThemeColor();
-  const styles = makeStyles(fonts);
-
   return (
     <Text
       className={`${color ?? 'text-gray-600'}`}
@@ -23,22 +18,21 @@ export function Typography({ style, weight = 'regular', color, size = 14, maxFon
     />
   );
 }
-const makeStyles = (fonts: FontsType) =>
-  StyleSheet.create({
-    regular: {
-      fontWeight: '400',
-      fontFamily: fonts.regular,
-    },
-    medium: {
-      fontWeight: '500',
-      fontFamily: fonts.medium,
-    },
-    semibold: {
-      fontWeight: '600',
-      fontFamily: fonts.semiBold,
-    },
-    bold: {
-      fontWeight: '700',
-      fontFamily: fonts.bold,
-    },
-  });
+const styles = StyleSheet.create({
+  regular: {
+    fontWeight: '400',
+    fontFamily: 'Rubik_400Regular',
+  },
+  medium: {
+    fontWeight: '500',
+    fontFamily: 'Rubik_500Medium',
+  },
+  semibold: {
+    fontWeight: '600',
+    fontFamily: 'Rubik_600SemiBold',
+  },
+  bold: {
+    fontWeight: '700',
+    fontFamily: 'Rubik_700Bold',
+  },
+});

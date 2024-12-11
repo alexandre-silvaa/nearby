@@ -6,10 +6,3 @@ export const Fonts = {
   Rubik_400Regular,
   Rubik_600SemiBold,
 };
-
-export type FontsType = {
-  bold: string;
-  medium: string;
-  regular: string;
-  semiBold: string;
-};
