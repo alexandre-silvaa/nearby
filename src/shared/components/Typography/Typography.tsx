@@ -9,14 +9,9 @@ export type TypographyProps = TextProps & {
 };
 
 export function Typography({ style, weight = 'regular', color, size = 14, maxFontSizeMultiplier = 1.2, ...rest }: TypographyProps) {
-  return (
-    <Text
-      className={`${color ? `text-${color.replace('.', '-')}` : 'text-gray-600'}`}
-      maxFontSizeMultiplier={maxFontSizeMultiplier}
-      style={[{ fontSize: size }, styles[weight], style]}
-      {...rest}
-    />
-  );
+  const textColor = color ? `text-${color?.replace('.', '-')}` : 'text-gray-600';
+
+  return <Text className={textColor} maxFontSizeMultiplier={maxFontSizeMultiplier} style={[{ fontSize: size }, styles[weight], style]} {...rest} />;
 }
 const styles = StyleSheet.create({
   regular: {

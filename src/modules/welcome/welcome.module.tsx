@@ -3,6 +3,7 @@ import Step from '@/src/shared/components/Step/Step';
 import { Typography } from '@/src/shared/components/Typography/Typography';
 import { IconMapPin, IconQrcode, IconTicket } from '@tabler/icons-react-native';
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { View } from 'react-native';
 
 export default function WelcomeModule() {
@@ -24,7 +25,7 @@ export default function WelcomeModule() {
         <Step icon={IconQrcode} title="Ative o cupom com QR Code" description="Escaneie o código no estabelecimento para usar o benefício" />
         <Step icon={IconTicket} title="Garanta vantagens perto de você" description="Ative cupons onde estiver, em diferentes tipos de estabelecimento" />
       </View>
-      <Button label="Começar" />
+      <Button label="Começar" onPress={() => router.push('/home')} />
     </View>
   );
 }
