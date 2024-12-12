@@ -5,7 +5,7 @@ import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import Place from '@/src/shared/components/Place/Place';
 import { useThemeColor } from '@/src/shared/hooks/useThemeColor';
 import { Typography } from '@/src/shared/components/Typography/Typography';
-import MapView from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 import { currentLocation } from '@/src/shared/constants/Location';
 
 export default function HomeModule() {
@@ -29,12 +29,38 @@ export default function HomeModule() {
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: states.location?.coords.latitude ?? currentLocation.latitude,
-          longitude: states.location?.coords.longitude ?? currentLocation.longitude,
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-      />
+      >
+        <Marker
+          identifier="current"
+          coordinate={{ latitude: currentLocation.latitude, longitude: currentLocation.longitude }}
+          image={require('@/src/shared/assets/images/location.png')}
+        />
+
+        {states?.markets?.map((market) => (
+          <Marker
+            key={market.id}
+            identifier="current"
+            coordinate={{ latitude: market.latitude, longitude: market.longitude }}
+            image={require('@/src/shared/assets/images/pin.png')}
+          >
+            <Callout>
+              <View>
+                <Typography size={14} color="gray.600" weight="medium">
+                  {market.name}
+                </Typography>
+                <Typography size={12} color="gray.600" weight="regular">
+                  {market.address}
+                </Typography>
+              </View>
+            </Callout>
+          </Marker>
+        ))}
+      </MapView>
 
       <BottomSheet
         ref={states.bottomSheetRef}

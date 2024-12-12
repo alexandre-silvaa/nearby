@@ -5,4 +5,6 @@ export interface IMarket {
   coupons: string;
   cover: string;
   address: string;
+  latitude: number;
+  longitude: number;
 }
