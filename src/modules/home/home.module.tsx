@@ -7,6 +7,7 @@ import { useThemeColor } from '@/src/shared/hooks/useThemeColor';
 import { Typography } from '@/src/shared/components/Typography/Typography';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import { currentLocation } from '@/src/shared/constants/Location';
+import { router } from 'expo-router';
 
 export default function HomeModule() {
   const { pallet } = useThemeColor();
@@ -48,7 +49,7 @@ export default function HomeModule() {
             coordinate={{ latitude: market.latitude, longitude: market.longitude }}
             image={require('@/src/shared/assets/images/pin.png')}
           >
-            <Callout>
+            <Callout onPress={() => router.push({ pathname: '/market-details', params: { id: market.id } })}>
               <View>
                 <Typography size={14} color="gray.600" weight="medium">
                   {market.name}

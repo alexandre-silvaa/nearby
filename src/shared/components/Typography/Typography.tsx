@@ -1,5 +1,6 @@
 import { StyleSheet, Text, type TextProps } from 'react-native';
 import { ColorKeys } from '../../constants/Colors';
+import { useThemeColor } from '../../hooks/useThemeColor';
 
 export type TypographyProps = TextProps & {
   color?: ColorKeys;
@@ -9,9 +10,9 @@ export type TypographyProps = TextProps & {
 };
 
 export function Typography({ style, weight = 'regular', color, size = 14, maxFontSizeMultiplier = 1.2, ...rest }: TypographyProps) {
-  const textColor = color ? `text-${color?.replace('.', '-')}` : 'text-gray-600';
+  const { pallet } = useThemeColor();
 
-  return <Text className={textColor} maxFontSizeMultiplier={maxFontSizeMultiplier} style={[{ fontSize: size }, styles[weight], style]} {...rest} />;
+  return <Text maxFontSizeMultiplier={maxFontSizeMultiplier} style={[{ fontSize: size, color: pallet.colors.gray[600] }, styles[weight], style]} {...rest} />;
 }
 const styles = StyleSheet.create({
   regular: {

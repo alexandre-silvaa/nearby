@@ -8,3 +8,23 @@ export interface IMarket {
   latitude: number;
   longitude: number;
 }
+
+export interface IMarketDetails {
+  address: string;
+  categoryId: string;
+  coupons: number;
+  cover: string;
+  description: string;
+  id: string;
+  latitude: number;
+  longitude: number;
+  name: string;
+  phone: string;
+  rules: Rule[];
+}
+
+export interface Rule {
+  description: string;
+  id: string;
+  marketId: string;
+}
