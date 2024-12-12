@@ -18,11 +18,13 @@ export default function Button({ label, style, fontSize = 16, isLoading = false,
 
   return (
     <TouchableOpacity activeOpacity={0.7} style={[styles.button, style]} disabled={isLoading} {...rest}>
-      <Typography size={fontSize} weight="semibold" color="gray.100">
-        {Icon && <Icon size="small" color={pallet.colors.gray[100]} />}
-        {isLoading && <ActivityIndicator />}
-        {!isLoading && label && label}
-      </Typography>
+      {Icon && <Icon size="small" color={pallet.colors.gray[100]} />}
+      {isLoading && <ActivityIndicator />}
+      {!isLoading && label && (
+        <Typography size={fontSize} weight="semibold" color="gray.100">
+          {label}
+        </Typography>
+      )}
     </TouchableOpacity>
   );
 }
