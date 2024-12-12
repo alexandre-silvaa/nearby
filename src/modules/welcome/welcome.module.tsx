@@ -1,4 +1,5 @@
 import Button from '@/src/shared/components/Button/Button';
+import { Container } from '@/src/shared/components/Container/Container';
 import Step from '@/src/shared/components/Step/Step';
 import { Typography } from '@/src/shared/components/Typography/Typography';
 import { IconMapPin, IconQrcode, IconTicket } from '@tabler/icons-react-native';
@@ -8,7 +9,7 @@ import { View } from 'react-native';
 
 export default function WelcomeModule() {
   return (
-    <View className="flex-1" style={{ gap: 10 }}>
+    <Container className="flex-1 p-10" style={{ gap: 10 }}>
       <Image style={{ width: 48, height: 48, marginBottom: 28 }} source={require('@/src/shared/assets/images/logo.png')} />
       <Typography size={24} weight="bold" color="gray.600">
         Boas vindas ao Nearby!
@@ -26,6 +27,6 @@ export default function WelcomeModule() {
         <Step icon={IconTicket} title="Garanta vantagens perto de você" description="Ative cupons onde estiver, em diferentes tipos de estabelecimento" />
       </View>
       <Button label="Começar" onPress={() => router.push('/home')} />
-    </View>
+    </Container>
   );
 }

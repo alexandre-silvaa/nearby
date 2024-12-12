@@ -5,6 +5,7 @@ import { api } from '@/src/shared/services/api';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
 import { Alert } from 'react-native';
+import * as Location from 'expo-location';
 
 export default function useHome() {
   const { height } = useDimensions();
@@ -12,6 +13,7 @@ export default function useHome() {
   const [categories, setCategories] = useState<ICategory[]>();
   const [category, setCategory] = useState<ICategory>();
   const [markets, setMarkets] = useState<IMarket[]>();
+  const [location, setLocation] = useState<Location.LocationObject | null>(null);
 
   const bottomSheetRef = useRef<BottomSheet>(null);
 
@@ -36,6 +38,18 @@ export default function useHome() {
     }
   };
 
+  const getCurrentLocation = async () => {
+    try {
+      const { granted } = await Location.requestForegroundPermissionsAsync();
+      if (!granted) return;
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Localização', 'Não foi possível recuperar sua localização atual.');
+    }
+  };
+
   const onSelectedCategory = (category: ICategory) => {
     setCategory(category);
   };
@@ -47,6 +61,7 @@ export default function useHome() {
 
   useEffect(() => {
     fetchCategories();
+    getCurrentLocation();
   }, []);
 
   useEffect(() => {
@@ -55,5 +70,5 @@ export default function useHome() {
     fetchMarkets();
   }, [category]);
 
-  return { states: { categories, category, markets, bottomSheetRef, snapPoints }, methods: { onSelectedCategory } };
+  return { states: { categories, category, markets, bottomSheetRef, snapPoints, location }, methods: { onSelectedCategory } };
 }

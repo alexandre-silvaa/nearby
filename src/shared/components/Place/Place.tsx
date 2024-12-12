@@ -19,7 +19,7 @@ export default function Place({ place, ...rest }: Readonly<PlaceProps>) {
         <Typography weight="medium" color="gray.600">
           {place?.name}
         </Typography>
-        <Typography size={12} weight="regular" color="gray.500">
+        <Typography size={12} weight="regular" color="gray.500" numberOfLines={2}>
           {place?.description}
         </Typography>
 

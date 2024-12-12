@@ -5,6 +5,8 @@ import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import Place from '@/src/shared/components/Place/Place';
 import { useThemeColor } from '@/src/shared/hooks/useThemeColor';
 import { Typography } from '@/src/shared/components/Typography/Typography';
+import MapView from 'react-native-maps';
+import { currentLocation } from '@/src/shared/constants/Location';
 
 export default function HomeModule() {
   const { pallet } = useThemeColor();
@@ -20,9 +22,20 @@ export default function HomeModule() {
         )}
         horizontal
         showsHorizontalScrollIndicator={false}
-        className="max-h-9 z-10"
+        className="max-h-10 z-10 absolute top-[7%] px-5"
         contentContainerStyle={{ gap: 8 }}
       />
+
+      <MapView
+        style={{ flex: 1 }}
+        initialRegion={{
+          latitude: states.location?.coords.latitude ?? currentLocation.latitude,
+          longitude: states.location?.coords.longitude ?? currentLocation.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+      />
+
       <BottomSheet
         ref={states.bottomSheetRef}
         snapPoints={[states?.snapPoints.min, states?.snapPoints.max]}

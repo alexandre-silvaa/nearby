@@ -14,7 +14,9 @@ export default function Category({ iconId, name, isSelected = false, ...rest }: 
 
   return (
     <Pressable
-      className={`flex-row px-3 h-9 border-gray-300 rounded-lg justify-center items-center ${isSelected ? 'bg-green-base border-0' : 'bg-gray-100 border-2'}`}
+      className={`flex-row px-3 h-9 border-gray-300 rounded-lg justify-center items-center border-2 ${
+        isSelected ? 'bg-green-base border-green-base' : 'bg-gray-100'
+      }`}
       style={{ gap: 10 }}
       {...rest}
     >
