@@ -9,11 +9,26 @@ export type TypographyProps = TextProps & {
   weight?: 'regular' | 'medium' | 'semibold' | 'bold';
 };
 
-export function Typography({ style, weight = 'regular', color, size = 14, maxFontSizeMultiplier = 1.2, ...rest }: TypographyProps) {
+export function Typography({ style, weight = 'regular', color = 'gray.600', size = 14, maxFontSizeMultiplier = 1.2, ...rest }: TypographyProps) {
   const { pallet } = useThemeColor();
 
-  return <Text maxFontSizeMultiplier={maxFontSizeMultiplier} style={[{ fontSize: size, color: pallet.colors.gray[600] }, styles[weight], style]} {...rest} />;
+  const resolveColor = (key: ColorKeys): string | undefined => {
+    const [group, shade] = key.split('.') as [keyof typeof pallet.colors, string];
+    const groupColors = pallet.colors[group];
+    if (typeof groupColors === 'object' && groupColors !== null && shade in groupColors) {
+      return groupColors[shade as keyof typeof groupColors];
+    }
+    if (typeof groupColors === 'string') {
+      return groupColors;
+    }
+    return undefined;
+  };
+
+  const textColor = color ? resolveColor(color) : pallet.colors.gray[600];
+
+  return <Text maxFontSizeMultiplier={maxFontSizeMultiplier} style={[{ fontSize: size, color: textColor }, styles[weight], style]} {...rest} />;
 }
+
 const styles = StyleSheet.create({
   regular: {
     fontWeight: '400',
