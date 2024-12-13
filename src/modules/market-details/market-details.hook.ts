@@ -1,5 +1,5 @@
 import { api } from '@/src/shared/services/api';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Alert } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { IMarketDetails } from '@/src/shared/assets/@types/market.type';
@@ -13,6 +13,10 @@ export default function useMarketDetails() {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const [_, requestPermission] = useCameraPermissions();
+
+  console.log(id);
+
+  const qrLock = useRef(false);
 
   const fetchMarketById = async () => {
     try {
@@ -32,11 +36,32 @@ export default function useMarketDetails() {
         return;
       }
 
+      qrLock.current = false;
       toggleModal();
     } catch (error) {
       console.log(error);
-      Alert.alert('Erro', 'Não foi possível abrir sua câmera.');
+      Alert.alert('Erro', 'Não foi possível utilizar sua câmera.');
     }
+  };
+
+  const getCoupon = async (id: string) => {
+    try {
+      const { data } = await api.patch(`/coupons/${id}`);
+      Alert.alert('Cupom', data.coupon);
+      setCoupon(data);
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro', 'Não foi possível utilizar o cupom.');
+    }
+  };
+
+  const handleUseCoupon = (id: string) => {
+    toggleModal();
+
+    Alert.alert('Cupom', `Deseja resgatar o cupom de ${market?.name}?`, [
+      { style: 'cancel', text: 'Não' },
+      { text: 'Sim', onPress: () => getCoupon(id) },
+    ]);
   };
 
   const toggleModal = () => setIsVisible((prev) => !prev);
@@ -44,7 +69,7 @@ export default function useMarketDetails() {
   useEffect(() => {
     if (!id) return;
     fetchMarketById();
-  }, [id]);
+  }, [id, coupon]);
 
-  return { states: { market, coupon, isVisible }, methods: { toggleModal, handleOpenCamera } };
+  return { states: { market, coupon, isVisible }, methods: { toggleModal, handleOpenCamera, handleUseCoupon, qrLock } };
 }
